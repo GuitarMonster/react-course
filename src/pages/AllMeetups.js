@@ -1,4 +1,5 @@
 import MeetupList from "../components/meetups/MeetupList";
+import { useEffect, useState } from "react";
 
 const DATA = [
   {
@@ -22,10 +23,29 @@ const DATA = [
 ];
 
 function AllMeetupsPage() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [meetups, setMeetups] = useState([]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetch(
+      "https://react-getting-started-b2346-default-rtdb.europe-west1.firebasedatabase.app/meetups.json"
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setMeetups(Object.values(data));
+        setIsLoading(false);
+      });
+  }, []);
+
+  if (isLoading) {
+    return <section>Loading...</section>;
+  }
+
   return (
     <section>
       <h1>All Meetups Page</h1>
-      <MeetupList meetups={DATA} />
+      <MeetupList meetups={meetups} />
     </section>
   );
 }

@@ -1,8 +1,8 @@
 import NewMeetupForm from "../components/meetups/NewMeetupForm";
-import { useHistory } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function NewMeetupPage() {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   function onAddNew(data) {
     // fetch();  todo learn more about feth
@@ -16,7 +16,7 @@ function NewMeetupPage() {
         }
       }
     ).then(() => {
-      history.replace('/');
+      navigate('/');
     })
   }
 
